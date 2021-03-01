@@ -10,7 +10,7 @@ using namespace std::chrono;
 class GameLoop
 {
 public:
-	SDL_Window* gameWindow;
+	SDL_Window* GameWindow;
 	SDL_Renderer* renderer;
 	SDL_Rect* rect;
 	Player* player;
@@ -23,7 +23,6 @@ public:
 	void FixedUpdate(double dt);
 
 private:
-	bool* inputs;
 	bool activeGame;
 };
 

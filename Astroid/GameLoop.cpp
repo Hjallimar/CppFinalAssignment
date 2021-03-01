@@ -2,13 +2,8 @@
 
 GameLoop::GameLoop(int height, int width)
 {
-	gameWindow = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
-	renderer = SDL_CreateRenderer(gameWindow, -1, 0);
-	inputs = new bool[4];
-	for (int i = 0; i < 4; i++)
-	{
-		inputs[i] = false;
-	}
+	GameWindow = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
+	renderer = SDL_CreateRenderer(GameWindow, -1, 0);
 	player = new Player();
 	player->position.x = 300;
 	player->position.y = 300;
@@ -18,9 +13,8 @@ GameLoop::GameLoop(int height, int width)
 GameLoop::~GameLoop()
 {
 	delete player;
-	delete[] inputs;
 	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(gameWindow);
+	SDL_DestroyWindow(GameWindow);
 }
 
 void GameLoop::UpdateLoop()
@@ -75,5 +69,16 @@ void GameLoop::RenderUpdate()
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	player->RenderPlayer(renderer);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	/*
+	SDL_RenderDrawLine(renderer, 100, 0, 100, 600);
+	SDL_RenderDrawLine(renderer, 200, 0, 200, 600);
+	SDL_RenderDrawLine(renderer, 300, 0, 300, 600);
+	SDL_RenderDrawLine(renderer, 400, 0, 400, 600);
+	SDL_RenderDrawLine(renderer, 500, 0, 500, 600);
+	SDL_RenderDrawLine(renderer, 600, 0, 600, 600);
+	SDL_RenderDrawLine(renderer, 700, 0, 700, 600);*/
+
+
 	SDL_RenderPresent(renderer);
 }
