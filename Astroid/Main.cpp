@@ -7,6 +7,5 @@ int main(int argc, char** argv)
 	game->UpdateLoop();
 	delete game;
 	std::cout << "Quitting Game" << std::endl;
-	SDL_Delay(5000);
 	return 0;
 }
