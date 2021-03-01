@@ -12,8 +12,6 @@ void Rigidbody::setup(GameObject* go) {
 }
 
 void Rigidbody::handleVelocity() {
-	std::cout << parent->getPosition().x << std::endl;
-	std::cout << parent->getPosition().y << std::endl;
 	parent->setPosition(parent->getPosition() + velocity);
 }
 

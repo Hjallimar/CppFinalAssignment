@@ -61,7 +61,7 @@ void GameLoop::GatherPlayerInput(double dt)
 void GameLoop::FixedUpdate(double dt)
 {
 	GatherPlayerInput(dt);
-	player->Update();
+	player->UpdatePlayer();
 }
 
 void GameLoop::RenderUpdate()

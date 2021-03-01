@@ -17,9 +17,3 @@ void GameObject::setPosition(Vector2 newPosition)
 {
 	position = newPosition;
 }
-
-void GameObject::AddPosition(Vector2 velocity)
-{
-	position.x += velocity.x;
-	position.y += velocity.y;
-}

@@ -16,17 +16,11 @@ void Player::Rotate(bool clockwise) {
 	rotation += (clockwise) ? rotationSpeed : -rotationSpeed;
 }
 
-void Player::Move() {
+void Player::ThrustForward() {
 	Vector2 force;
 	force.x = dir.x * thrustPower;
 	force.y = dir.y * thrustPower;
 	rigidbody->addForce(force);
-}
-
-void Player::ThrustForward() {
-	//std::cout << "x: " << dir.x << std::endl;
-	//std::cout << "y: " << dir.y << std::endl;
-	Move();
 }
 
 void Player::RenderPlayer(SDL_Renderer* renderer)
@@ -43,8 +37,7 @@ void Player::RenderPlayer(SDL_Renderer* renderer)
 	/*SDL_FillRect(renderer, SDL_Rect rectangle);*/
 }
 
-void Player::Update() {
+void Player::UpdatePlayer() {
 
-	AddPosition(rigidbody->GetVelocity());
-	//renderer->setPosition(getPosition());
+	getRigidbody()->handleVelocity();
 }

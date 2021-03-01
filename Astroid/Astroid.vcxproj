@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Programming\CppFinalAssignment\Astroid\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Programming\CppFinalAssignment\Astroid\SDL2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
