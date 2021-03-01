@@ -5,8 +5,7 @@ GameLoop::GameLoop(int height, int width)
 	GameWindow = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
 	renderer = SDL_CreateRenderer(GameWindow, -1, 0);
 	player = new Player();
-	player->position.x = 300;
-	player->position.y = 300;
+	player->setPosition(Vector2(300, 300));
 	activeGame = true;
 }
 
@@ -48,11 +47,11 @@ void GameLoop::GatherPlayerInput(double dt)
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 
 	if (state[SDL_SCANCODE_LEFT])
-		player->Rotate(-5 * dt);
+		player->Rotate(false);
 	if (state[SDL_SCANCODE_RIGHT])
-		player->Rotate(5 * dt);
+		player->Rotate(true);
 	if (state[SDL_SCANCODE_UP])
-		player->Move(100 * dt);
+		player->ThrustForward();
 	if (state[SDL_SCANCODE_ESCAPE])
 		activeGame = false;	
 }

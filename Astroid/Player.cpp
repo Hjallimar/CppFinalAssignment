@@ -2,37 +2,39 @@
 
 Player::Player()
 {
-	direction = Vector2(1.0f, 0.0f);
-	position = Vector2();
+	rigidbody = new Rigidbody();
+	rigidbody->setup(this);
 }
 
 Player::~Player()
 {
 }
 
-void Player::Rotate(float angle)
-{
-	float newX = direction.x * cos(angle) - direction.y * sin(angle);
-	float newY = direction.x * sin(angle) + direction.y * cos(angle);
-	direction.x = newX;
-	direction.y = newY;
+void Player::Rotate(bool clockwise) {
+	rotation += (clockwise) ? rotationSpeed : -rotationSpeed;
 }
 
-void Player::Move(float speed)
-{
-	position.x += direction.x * speed;
-	position.y += direction.y * speed;
+void Player::Move(Vector2 dir) {
+	Vector2 force;
+	force.x = dir.x * thrustPower;
+	force.y = dir.y * thrustPower;
+	rigidbody->addForce(force);
+}
+
+void Player::ThrustForward() {
+	Vector2 dir;
+	Math math;
+	dir = math.angleToVector(math.degreesToRadians(rotation));
+	std::cout << "x: " << dir.x << std::endl;
+	std::cout << "y: " << dir.y << std::endl;
+	Move(dir);
 }
 
 void Player::RenderPlayer(SDL_Renderer* renderer)
 {
-	float a1 = (direction.x * cos(-60) - direction.y * sin(-60)) * 25 + position.x + 0.5;
-	float a2 = (direction.x * sin(-60) + direction.y * cos(-60)) * 25 + position.y + 0.5;
-
-	float b1 = (direction.x * cos(60) - direction.y * sin(60)) * 25 + position.x + 0.5;
-	float b2 = (direction.x * sin(60) + direction.y * cos(60)) * 25 + position.y + 0.5;
-
-	SDL_RenderDrawLine(renderer, a1, a2, b1, b2);
-	SDL_RenderDrawLine(renderer, a1, a2, direction.x + position.x + 0.5, direction.y + position.y + 0.5);
-	SDL_RenderDrawLine(renderer, b1, b2, direction.x + position.x + 0.5, direction.y + position.y + 0.5);
+	/*SDL_FillRect(renderer, SDL_Rect rectangle);*/
 }
+
+//void Player::Update() {
+//	renderer->setPosition(getPosition());
+//}
