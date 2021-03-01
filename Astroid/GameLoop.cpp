@@ -49,57 +49,24 @@ void GameLoop::UpdateLoop()
 }
 
 //Input system that uses switch/case
-void GameLoop::GatherPlayerInput()
+void GameLoop::GatherPlayerInput(double dt)
 {
-	SDL_Event newEvent;
-	SDL_PollEvent(&newEvent);
+	SDL_PumpEvents();
+	const Uint8* state = SDL_GetKeyboardState(NULL);
 
-	switch (newEvent.type)
-	{
-	case SDL_KEYDOWN:
-		switch (newEvent.key.keysym.sym)
-		{
-			case SDLK_ESCAPE:
-				activeGame = false;
-				break;
-			case SDLK_a:
-				inputs[0] = true;
-				break;		
-			case SDLK_w:
-				inputs[1] = true;
-				break;
-			case SDLK_d:
-				inputs[2] = true;
-				break;
-		}
-		break;
-	case SDL_KEYUP:
-		switch (newEvent.key.keysym.sym)
-		{
-		case SDLK_a:
-			inputs[0] = false;
-			break;
-		case SDLK_w:
-			inputs[1] = false;
-			break;
-		case SDLK_d:
-			inputs[2] = false;
-			break;
-		}
-		break;
-	}
+	if (state[SDL_SCANCODE_LEFT])
+		player->Rotate(-5 * dt);
+	if (state[SDL_SCANCODE_RIGHT])
+		player->Rotate(5 * dt);
+	if (state[SDL_SCANCODE_UP])
+		player->Move(100 * dt);
+
+	
 }
 
 void GameLoop::FixedUpdate(double dt)
 {
-	GatherPlayerInput();
-	if (inputs[0])
-		player->Rotate(-5 * dt);
-	if (inputs[2])
-		player->Rotate(5 * dt);
-	if (inputs[1])
-		player->Move(100 * dt);
-
+	GatherPlayerInput(dt);
 	//Do stuffs that we want like move around ye?
 }
 

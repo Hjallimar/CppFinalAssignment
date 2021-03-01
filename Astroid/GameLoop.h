@@ -19,7 +19,7 @@ public:
 
 	void UpdateLoop();
 	void RenderUpdate();
-	void GatherPlayerInput();
+	void GatherPlayerInput(double dt);
 	void FixedUpdate(double dt);
 
 private:
