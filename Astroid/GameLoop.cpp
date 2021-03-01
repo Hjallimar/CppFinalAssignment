@@ -52,6 +52,8 @@ void GameLoop::GatherPlayerInput(double dt)
 		player->Rotate(true);
 	if (state[SDL_SCANCODE_UP])
 		player->ThrustForward();
+	else if (!state[SDL_SCANCODE_UP])
+		player->Deaccelerate();
 	if (state[SDL_SCANCODE_ESCAPE])
 		activeGame = false;	
 }
@@ -59,6 +61,7 @@ void GameLoop::GatherPlayerInput(double dt)
 void GameLoop::FixedUpdate(double dt)
 {
 	GatherPlayerInput(dt);
+	player->Update();
 }
 
 void GameLoop::RenderUpdate()
@@ -77,7 +80,6 @@ void GameLoop::RenderUpdate()
 	SDL_RenderDrawLine(renderer, 500, 0, 500, 600);
 	SDL_RenderDrawLine(renderer, 600, 0, 600, 600);
 	SDL_RenderDrawLine(renderer, 700, 0, 700, 600);*/
-
 
 	SDL_RenderPresent(renderer);
 }

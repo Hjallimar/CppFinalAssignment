@@ -24,6 +24,11 @@ typedef struct Vector2
 
 	}
 
+	float Magnitude()
+	{
+		return fabs(x) + fabs(y);
+	}
+
 	Vector2 operator +(Vector2 a) 
 	{
 		return Vector2(a.x + x, a.y + y);
@@ -37,6 +42,13 @@ typedef struct Vector2
 	Vector2 operator *(float a) 
 	{
 		return Vector2(a * x, a * y);
+	}
+
+	Vector2 operator *=(float a)
+	{
+		x *= a;
+		y *= a;
+		return Vector2(x, y);
 	}
 } Vector2;
 

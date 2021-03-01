@@ -13,6 +13,15 @@ public:
 
 	void handleVelocity();
 	void addForce(Vector2 force);
+	void Nullify()
+	{
+		velocity.x = 0;
+		velocity.y = 0;
+	}
+	Vector2 GetVelocity()
+	{
+		return velocity;
+	}
 private:
 	Vector2 velocity;
 };
