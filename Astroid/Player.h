@@ -27,14 +27,11 @@ private:
 
 public:
 	Vector2 position;
-	SDL_Rect playerRect;
-	SDL_Rect dirrRect;
 
 	Player();
 	~Player();
 	void Rotate(float angle);
 	void Move(float speed);
-	void UpdateRect();
-
+	void RenderPlayer(SDL_Renderer* renderer);
 };
 

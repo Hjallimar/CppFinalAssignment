@@ -12,7 +12,6 @@ GameLoop::GameLoop(int height, int width)
 	player = new Player();
 	player->position.x = 300;
 	player->position.y = 300;
-	player->UpdateRect();
 	activeGame = true;
 }
 
@@ -60,14 +59,13 @@ void GameLoop::GatherPlayerInput(double dt)
 		player->Rotate(5 * dt);
 	if (state[SDL_SCANCODE_UP])
 		player->Move(100 * dt);
-
-	
+	if (state[SDL_SCANCODE_ESCAPE])
+		activeGame = false;	
 }
 
 void GameLoop::FixedUpdate(double dt)
 {
 	GatherPlayerInput(dt);
-	//Do stuffs that we want like move around ye?
 }
 
 void GameLoop::RenderUpdate()
@@ -76,10 +74,6 @@ void GameLoop::RenderUpdate()
 	SDL_RenderClear(renderer);
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(renderer, &(player->playerRect));
-
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_RenderFillRect(renderer, &(player->dirrRect));
-
+	player->RenderPlayer(renderer);
 	SDL_RenderPresent(renderer);
 }
