@@ -12,6 +12,7 @@ public:
 	Collider* GetCollider();
 	void SetPosition(Vector2 newPosition);
 	virtual void Die() = 0;
+
 protected:
 	Collider* collider;
 

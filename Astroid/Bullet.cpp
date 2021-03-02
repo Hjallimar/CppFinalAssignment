@@ -15,15 +15,35 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
+	std::cout << "Decon" << std::endl;
 	delete rigidbody;
+	delete collider;
 }
 
-void Bullet::UpdateBullet()
+void Bullet::UpdateBullet(double dt)
 {
-	SetPosition(GetPosition() + GetRigidbody()->GetVelocity());
+	lifeTime -= dt;
+	GetRigidbody()->HandleVelocity();
 	rectangle.x = GetPosition().x;
 	rectangle.y = GetPosition().y;
 	GetCollider()->center = GetPosition();
+
+	if (GetPosition().x < 0)
+	{
+		SetPosition(Vector2(GetPosition().x + 600, GetPosition().y));
+	}
+	else if (GetPosition().x > 600)
+	{
+		SetPosition(Vector2(GetPosition().x - 600, GetPosition().y));
+	}
+	if (GetPosition().y < 0)
+	{
+		SetPosition(Vector2(GetPosition().x, GetPosition().y + 600));
+	}
+	else if (GetPosition().y > 600)
+	{
+		SetPosition(Vector2(GetPosition().x, GetPosition().y - 600));
+	}
 }
 
 void Bullet::RenderBullet(SDL_Renderer* renderer)
@@ -34,4 +54,5 @@ void Bullet::RenderBullet(SDL_Renderer* renderer)
 
 void Bullet::Die()
 {
+
 }

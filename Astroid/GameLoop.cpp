@@ -77,11 +77,18 @@ void GameLoop::FixedUpdate(double dt)
 {
 	GatherPlayerInput(dt);
 	player->UpdatePlayer(dt);
+	int removeBulletAtIndex = -1;
 	for (std::size_t i = 0; i < bullets.size(); ++i) {
-		bullets[i]->UpdateBullet();
+		bullets[i]->UpdateBullet(dt);
+		if (bullets[i]->GetLifeTime() <= 0)
+			removeBulletAtIndex = i;
 	}
 	for (std::size_t i = 0; i < rocks.size(); ++i) {
 		rocks[i]->UpdateAstroid();
+	}
+	if (removeBulletAtIndex != -1) {
+		delete bullets[removeBulletAtIndex];
+		bullets.erase(bullets.begin() + removeBulletAtIndex);
 	}
 	CheckCollisions();
 }
@@ -138,7 +145,9 @@ void GameLoop::CheckCollisions()
 	if (removeIndex != -1) 
 	{
 		//sum crusaded shit, look it up plz
+		delete rocks[removeIndex];
 		rocks.erase(rocks.begin() + removeIndex);
+		delete bullets[bulletIndex];
 		bullets.erase(bullets.begin() + bulletIndex);
 	}
 }

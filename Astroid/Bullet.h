@@ -10,13 +10,14 @@ public:
 	~Bullet();
 
 	Rigidbody* GetRigidbody() { return rigidbody; }
-	void UpdateBullet();
+	void UpdateBullet(double dt);
 	void RenderBullet(SDL_Renderer* renderer);
 	void Die();
+	double GetLifeTime() { return lifeTime; }
 
 private:
 	Rigidbody* rigidbody;
-	double lifetime = 5.0;
+	double lifeTime = 5.0;
 	SDL_Rect rectangle;
 };
 
