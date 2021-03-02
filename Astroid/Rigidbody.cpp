@@ -5,14 +5,16 @@ Rigidbody::Rigidbody() {
 	velocity = Vector2(0, 0);
 }
 Rigidbody::~Rigidbody()
-{}
+{
+	delete parent;
+}
 
 void Rigidbody::setup(GameObject* go) {
 	parent = go;
 }
 
 void Rigidbody::handleVelocity() {
-	parent->setPosition(parent->getPosition() + velocity);
+	parent->SetPosition(parent->GetPosition() + velocity);
 }
 
 void Rigidbody::addForce(Vector2 force) {

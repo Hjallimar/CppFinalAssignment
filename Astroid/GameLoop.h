@@ -12,7 +12,6 @@ class GameLoop
 public:
 	SDL_Window* GameWindow;
 	SDL_Renderer* renderer;
-	SDL_Rect* rect;
 	Player* player;
 	GameLoop(int height, int width);
 	~GameLoop();

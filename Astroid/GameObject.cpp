@@ -2,18 +2,24 @@
 
 GameObject::GameObject()
 {
+	collider = Collider(GetPosition(), 10.0f);
 }
 
 GameObject::~GameObject()
 {
 }
 
-Vector2 GameObject::getPosition()
+Vector2 GameObject::GetPosition()
 {
 	return position;
 }
 
-void GameObject::setPosition(Vector2 newPosition)
+void GameObject::SetPosition(Vector2 newPosition)
 {
 	position = newPosition;
+}
+
+Collider GameObject::GetCollider() 
+{
+	return collider;
 }

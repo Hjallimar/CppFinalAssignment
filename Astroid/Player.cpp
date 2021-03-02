@@ -4,15 +4,17 @@ Player::Player()
 {
 	rigidbody = new Rigidbody();
 	rigidbody->setup(this);
+	dir = Vector2(1, 0);
 }
 
 Player::~Player()
 {
+	delete rigidbody;
 }
 
 void Player::Rotate(bool clockwise) {
 	Math math;
-	dir = math.angleToVector(math.degreesToRadians(rotation));
+	dir = math.AngleToVector(math.DegreesToRadians(rotation));
 	rotation += (clockwise) ? rotationSpeed : -rotationSpeed;
 }
 
@@ -25,12 +27,12 @@ void Player::ThrustForward() {
 
 void Player::RenderPlayer(SDL_Renderer* renderer)
 {
-	float a1 = getPosition().x + (dir.x * cos(-60) - dir.y * sin(-60)) * 25;
-	float a2 = getPosition().y + (dir.x * sin(-60) + dir.y * cos(-60)) * 25;
-	float b1 = getPosition().x + (dir.x * cos(60) - dir.y * sin(60)) * 25;
-	float b2 = getPosition().y + (dir.x * sin(60) + dir.y * cos(60)) * 25;
-	float c1 = getPosition().x + dir.x * 25;
-	float c2 = getPosition().y + dir.y * 25;
+	float a1 = GetPosition().x + (dir.x * cos(-60) - dir.y * sin(-60)) * GetCollider().radius;
+	float a2 = GetPosition().y + (dir.x * sin(-60) + dir.y * cos(-60)) * GetCollider().radius;
+	float b1 = GetPosition().x + (dir.x * cos(60) - dir.y * sin(60)) * GetCollider().radius;
+	float b2 = GetPosition().y + (dir.x * sin(60) + dir.y * cos(60)) * GetCollider().radius;
+	float c1 = GetPosition().x + dir.x * GetCollider().radius;
+	float c2 = GetPosition().y + dir.y * GetCollider().radius;
 	SDL_RenderDrawLine(renderer, a1, a2, b1, b2);
 	SDL_RenderDrawLine(renderer, b1, b2, c1, c2);
 	SDL_RenderDrawLine(renderer, c1, c2, a1, a2);
@@ -40,4 +42,20 @@ void Player::RenderPlayer(SDL_Renderer* renderer)
 void Player::UpdatePlayer() {
 
 	getRigidbody()->handleVelocity();
+	if (GetPosition().x < 0) 
+	{
+		SetPosition(Vector2(GetPosition().x + 600, GetPosition().y));
+	}
+	else if (GetPosition().x > 600)
+	{
+		SetPosition(Vector2(GetPosition().x - 600, GetPosition().y));
+	}
+	if (GetPosition().y < 0)
+	{
+		SetPosition(Vector2(GetPosition().x, GetPosition().y + 600));
+	}
+	else if (GetPosition().y > 600)
+	{
+		SetPosition(Vector2(GetPosition().x, GetPosition().y - 600));
+	}
 }
