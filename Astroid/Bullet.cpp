@@ -5,6 +5,9 @@ Bullet::Bullet()
 {
 	rigidbody = new Rigidbody();
 	GetRigidbody()->Setup(this);
+
+	collider = new Collider(GetPosition(), 2);
+
 	rectangle = SDL_Rect();
 	rectangle.h = 2;
 	rectangle.w = 2;
@@ -20,6 +23,7 @@ void Bullet::UpdateBullet()
 	SetPosition(GetPosition() + GetRigidbody()->GetVelocity());
 	rectangle.x = GetPosition().x;
 	rectangle.y = GetPosition().y;
+	GetCollider()->center = GetPosition();
 }
 
 void Bullet::RenderBullet(SDL_Renderer* renderer)
