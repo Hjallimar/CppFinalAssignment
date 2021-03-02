@@ -1,7 +1,8 @@
 #include "GameObject.h"
-
+#include <iostream>
 GameObject::GameObject()
 {
+	position = Vector2(0.0f, 0.0f);
 	collider = Collider(GetPosition(), 10.0f);
 }
 
@@ -17,6 +18,7 @@ Vector2 GameObject::GetPosition()
 void GameObject::SetPosition(Vector2 newPosition)
 {
 	position = newPosition;
+	collider.center = position;
 }
 
 Collider GameObject::GetCollider() 

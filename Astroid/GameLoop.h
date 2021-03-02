@@ -5,6 +5,7 @@
 #include <chrono>
 #include <algorithm>
 #include "Player.h"
+#include "AstroidRock.h"
 
 using namespace std::chrono;
 [event_receiver(native)]
@@ -35,5 +36,6 @@ public:
 private:
 	bool activeGame;
 	std::vector<Bullet*> bullets;
+	std::vector<AstroidRock*> rocks;
 };
 

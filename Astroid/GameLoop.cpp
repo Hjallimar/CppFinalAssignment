@@ -8,7 +8,13 @@ GameLoop::GameLoop(int height, int width)
 	player->SetPosition(Vector2(300, 300));
 	activeGame = true;
 	bullets.reserve(100);
-
+	rocks.reserve(50);
+	for (int i = 0; i < 4; i++)
+	{
+		int rand = std::rand() % 600;
+		AstroidRock* rock = new AstroidRock(3, Vector2(rand, rand));
+		rocks.push_back(rock);
+	}
 	HookEvent(player);
 }
 
@@ -71,6 +77,9 @@ void GameLoop::FixedUpdate(double dt)
 	for (std::size_t i = 0; i < bullets.size(); ++i) {
 		bullets[i]->UpdateBullet();
 	}
+	for (std::size_t i = 0; i < rocks.size(); ++i) {
+		rocks[i]->UpdateAstroid();
+	}
 }
 
 void GameLoop::OnBulletFired()
@@ -92,6 +101,9 @@ void GameLoop::RenderUpdate()
 
 	for (std::size_t i = 0; i < bullets.size(); ++i) {
 		bullets[i]->RenderBullet(renderer);
+	}
+	for (std::size_t i = 0; i < rocks.size(); ++i) {
+		rocks[i]->Render(renderer);
 	}
 
 	SDL_RenderPresent(renderer);
