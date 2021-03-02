@@ -12,8 +12,8 @@ AstroidRock::AstroidRock()
 	direction = math.AngleToVector(math.DegreesToRadians(angle));
 	rigidbody->AddForce(direction * speed);
 	rect = SDL_Rect();
-	rect.h = size * GetCollider().radius;
-	rect.w = size * GetCollider().radius;
+	rect.h = size * GetCollider()->radius;
+	rect.w = size * GetCollider()->radius;
 }
 
 AstroidRock::AstroidRock(int newSize, Vector2 startPos) 
@@ -28,8 +28,8 @@ AstroidRock::AstroidRock(int newSize, Vector2 startPos)
 	direction = math.AngleToVector(math.DegreesToRadians(angle));
 	rigidbody->AddForce(direction * speed);
 	rect = SDL_Rect();
-	rect.h = size * GetCollider().radius;
-	rect.w = size * GetCollider().radius;
+	rect.h = size * GetCollider()->radius;
+	rect.w = size * GetCollider()->radius;
 }
 
 AstroidRock::~AstroidRock() 
@@ -44,8 +44,8 @@ void AstroidRock::ChangeDirection(Vector2 newDir)
 
 void AstroidRock::Render(SDL_Renderer* render) 
 {
-	rect.x = GetCollider().center.x - rect.w / 2;
-	rect.y = GetCollider().center.y - rect.w / 2;
+	rect.x = GetCollider()->center.x - rect.w / 2;
+	rect.y = GetCollider()->center.y - rect.w / 2;
 	SDL_SetRenderDrawColor(render, 0, 255, 0, 0);
 	SDL_RenderFillRect(render, &rect);
 }
@@ -74,4 +74,5 @@ void AstroidRock::UpdateAstroid()
 	{
 		SetPosition(Vector2(GetPosition().x, GetPosition().y - 600));
 	}
+	GetCollider()->center = GetPosition();
 }

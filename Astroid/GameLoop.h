@@ -33,6 +33,8 @@ public:
 		__unhook(&Player::BulletFiredEvent, pSource, &GameLoop::OnBulletFired);
 	}
 
+	void CheckCollisions();
+
 private:
 	bool activeGame;
 	std::vector<Bullet*> bullets;

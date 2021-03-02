@@ -9,9 +9,12 @@ GameLoop::GameLoop(int height, int width)
 	activeGame = true;
 	bullets.reserve(100);
 	rocks.reserve(50);
+	
 	for (int i = 0; i < 4; i++)
 	{
-		int rand = std::rand() % 600;
+		int rand = std::rand()%600;
+		if (rand > 200 && rand < 400)
+			rand += 200;
 		AstroidRock* rock = new AstroidRock(3, Vector2(rand, rand));
 		rocks.push_back(rock);
 	}
@@ -80,6 +83,7 @@ void GameLoop::FixedUpdate(double dt)
 	for (std::size_t i = 0; i < rocks.size(); ++i) {
 		rocks[i]->UpdateAstroid();
 	}
+	CheckCollisions();
 }
 
 void GameLoop::OnBulletFired()
@@ -107,4 +111,34 @@ void GameLoop::RenderUpdate()
 	}
 
 	SDL_RenderPresent(renderer);
+}
+
+void GameLoop::CheckCollisions() 
+{
+	int removeIndex = -1;
+	int bulletIndex = -1;
+	for (std::size_t i = 0; i < rocks.size(); ++i) {
+		for (std::size_t j = 0; j < bullets.size(); ++j) {
+			if (rocks[i]->GetCollider()->Overlaping(*(bullets[j]->GetCollider())))
+			{
+				//bullet hit astroid collider
+				removeIndex = i;
+				bulletIndex = j;
+				break;
+			}
+		}
+		if (rocks[i]->GetCollider()->Overlaping(*(player->GetCollider())))
+		{
+			//player hit astroid collider
+			activeGame = false;
+			break;
+		}
+	}
+
+	if (removeIndex != -1) 
+	{
+		//sum crusaded shit, look it up plz
+		rocks.erase(rocks.begin() + removeIndex);
+		bullets.erase(bullets.begin() + bulletIndex);
+	}
 }
