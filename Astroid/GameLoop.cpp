@@ -7,10 +7,14 @@ GameLoop::GameLoop(int height, int width)
 	player = new Player();
 	player->SetPosition(Vector2(300, 300));
 	activeGame = true;
+	bullets.reserve(100);
+
+	HookEvent(player);
 }
 
 GameLoop::~GameLoop()
 {
+	UnhookEvent(player);
 	delete player;
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(GameWindow);
@@ -53,7 +57,9 @@ void GameLoop::GatherPlayerInput(double dt)
 	if (state[SDL_SCANCODE_UP])
 		player->ThrustForward();
 	else if (!state[SDL_SCANCODE_UP])
-		player->Deaccelerate();
+		player->Deaccelerate(); 
+	if (state[SDL_SCANCODE_SPACE])
+		player->Shoot();
 	if (state[SDL_SCANCODE_ESCAPE])
 		activeGame = false;	
 }
@@ -61,7 +67,19 @@ void GameLoop::GatherPlayerInput(double dt)
 void GameLoop::FixedUpdate(double dt)
 {
 	GatherPlayerInput(dt);
-	player->UpdatePlayer();
+	player->UpdatePlayer(dt);
+	for (std::size_t i = 0; i < bullets.size(); ++i) {
+		bullets[i]->UpdateBullet();
+	}
+}
+
+void GameLoop::OnBulletFired()
+{
+	printf_s("BulletFiredEvent received.\n");
+	Bullet* bullet = new Bullet();
+	bullets.push_back(bullet);
+	bullet->SetPosition(player->GetPosition());
+	bullet->GetRigidbody()->AddForce(player->GetDirection() * 7.5);
 }
 
 void GameLoop::RenderUpdate()
@@ -71,6 +89,10 @@ void GameLoop::RenderUpdate()
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	player->RenderPlayer(renderer);
+
+	for (std::size_t i = 0; i < bullets.size(); ++i) {
+		bullets[i]->RenderBullet(renderer);
+	}
 
 	SDL_RenderPresent(renderer);
 }

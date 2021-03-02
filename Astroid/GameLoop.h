@@ -7,6 +7,7 @@
 #include "Player.h"
 
 using namespace std::chrono;
+[event_receiver(native)]
 class GameLoop
 {
 public:
@@ -21,7 +22,18 @@ public:
 	void GatherPlayerInput(double dt);
 	void FixedUpdate(double dt);
 
+	void OnBulletFired();
+
+	void HookEvent(Player* pSource) {
+		__hook(&Player::BulletFiredEvent, pSource, &GameLoop::OnBulletFired);
+	}
+
+	void UnhookEvent(Player* pSource) {
+		__unhook(&Player::BulletFiredEvent, pSource, &GameLoop::OnBulletFired);
+	}
+
 private:
 	bool activeGame;
+	std::vector<Bullet*> bullets;
 };
 

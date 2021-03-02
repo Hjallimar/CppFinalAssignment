@@ -6,18 +6,18 @@ Rigidbody::Rigidbody() {
 }
 Rigidbody::~Rigidbody()
 {
-	delete parent;
+	//delete parent;
 }
 
-void Rigidbody::setup(GameObject* go) {
+void Rigidbody::Setup(GameObject* go) {
 	parent = go;
 }
 
-void Rigidbody::handleVelocity() {
+void Rigidbody::HandleVelocity() {
 	parent->SetPosition(parent->GetPosition() + velocity);
 }
 
-void Rigidbody::addForce(Vector2 force) {
+void Rigidbody::AddForce(Vector2 force) {
 	velocity.x += force.x;
 	velocity.y += force.y;
 }

@@ -6,5 +6,5 @@ class IComponent
 {
 public:
 	GameObject* parent;
-	virtual void setup(GameObject* go) = 0;
+	virtual void Setup(GameObject* go) = 0;
 };

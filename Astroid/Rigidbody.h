@@ -9,10 +9,10 @@ public:
 	Rigidbody();
 	~Rigidbody();
 
-	void setup(GameObject* go);
+	void Setup(GameObject* go);
 
-	void handleVelocity();
-	void addForce(Vector2 force);
+	void HandleVelocity();
+	void AddForce(Vector2 force);
 	void Nullify()
 	{
 		velocity.x = 0;

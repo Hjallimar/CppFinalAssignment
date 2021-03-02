@@ -3,7 +3,7 @@
 Player::Player()
 {
 	rigidbody = new Rigidbody();
-	rigidbody->setup(this);
+	rigidbody->Setup(this);
 	dir = Vector2(1, 0);
 }
 
@@ -22,7 +22,15 @@ void Player::ThrustForward() {
 	Vector2 force;
 	force.x = dir.x * thrustPower;
 	force.y = dir.y * thrustPower;
-	rigidbody->addForce(force);
+	rigidbody->AddForce(force);
+}
+
+void Player::Shoot()
+{
+	if (timeSinceLastBullet >= 1 / fireRate) {
+		__raise BulletFiredEvent();
+		timeSinceLastBullet = 0;
+	}
 }
 
 void Player::RenderPlayer(SDL_Renderer* renderer)
@@ -39,9 +47,12 @@ void Player::RenderPlayer(SDL_Renderer* renderer)
 	/*SDL_FillRect(renderer, SDL_Rect rectangle);*/
 }
 
-void Player::UpdatePlayer() {
+void Player::UpdatePlayer(double dt) {
+	if (timeSinceLastBullet <= 1 / fireRate) {
+		timeSinceLastBullet += dt;
+	}
 
-	getRigidbody()->handleVelocity();
+	GetRigidbody()->HandleVelocity();
 	if (GetPosition().x < 0) 
 	{
 		SetPosition(Vector2(GetPosition().x + 600, GetPosition().y));
@@ -58,4 +69,8 @@ void Player::UpdatePlayer() {
 	{
 		SetPosition(Vector2(GetPosition().x, GetPosition().y - 600));
 	}
+}
+
+void Player::Die()
+{
 }
