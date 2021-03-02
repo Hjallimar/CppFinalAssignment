@@ -18,6 +18,7 @@ public:
 	void ThrustForward();
 	void RenderPlayer(SDL_Renderer* renderer);
 	void UpdatePlayer();
+	void Die();
 	void Deaccelerate()
 	{
 		if (rigidbody->GetVelocity().Magnitude() > 0.1)
