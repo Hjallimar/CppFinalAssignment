@@ -116,6 +116,7 @@ void GameState::CheckCollisions()
 	if (removeIndex != -1)
 	{
 		//sum crusaded shit, look it up plz
+		rocks[removeIndex]->TrySplit(&rocks);
 		delete rocks[removeIndex];
 		rocks.erase(rocks.begin() + removeIndex);
 		delete bullets[bulletIndex];
