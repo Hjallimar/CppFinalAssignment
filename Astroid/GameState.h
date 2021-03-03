@@ -10,8 +10,8 @@
 class GameState : public IState
 {
 public:
-	GameState();
-	~GameState();
+	GameState() {}
+	~GameState() {}
 
 	void Enter();
 	void Update(double dt);

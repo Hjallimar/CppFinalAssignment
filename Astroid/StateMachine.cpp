@@ -1,9 +1,20 @@
 #include "StateMachine.h"
 
+StateMachine::StateMachine()
+{
+	states.reserve(5);
+	currentState = nullptr;
+}
+
+StateMachine::~StateMachine()
+{
+}
+
 void StateMachine::Initialize(int height, int width)
 {
 	window = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
 	renderer = SDL_CreateRenderer(window, -1, 0);
+	activeGame = true;
 	GameState* gameState = new GameState();
 	gameState->head = this;
 	states.push_back(gameState);
@@ -27,11 +38,11 @@ void StateMachine::UpdateLoop()
 		accumulator += frametime;
 		while (accumulator >= dt)
 		{
-			currentState->Update(dt);
+			//currentState->Update(dt);
 			t += dt;
 			accumulator -= dt;
 		}
-		currentState->Render();
+		//currentState->Render();
 	}
 }
 
