@@ -1,11 +1,18 @@
 #include "GameLoop.h"
+#include "StateMachine.h"
 
 int main(int argc, char** argv)
 {
-	GameLoop* game = new GameLoop(600, 600);
+	// Create Statemachine
+	// MenuState
+	StateMachine* stateMachine = new StateMachine();
 	std::cout << "Starting Game" << std::endl;
-	game->UpdateLoop();
-	delete game;
+	stateMachine->Initialize(600, 600);
+	stateMachine->UpdateLoop();
+	delete stateMachine;
+	//GameLoop* game = new GameLoop(600, 600);
+	//game->UpdateLoop();
+	//delete game;
 	std::cout << "Quitting Game" << std::endl;
 	return 0;
 }
