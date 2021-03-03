@@ -55,6 +55,27 @@ void AstroidRock::Die()
 	//create 2 new astroids with size -1 and a new dirr
 }
 
+void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks) 
+{
+	if (size <= 1)
+		return;
+	int rand = std::rand() % 120;
+	Math math;
+	//split 1
+	AstroidRock* rock1 = new AstroidRock(size - 1, GetPosition());
+	float angle = math.VectorToAngle(direction);
+	Vector2 newDirr = math.AngleToVector(math.DegreesToRadians(angle + rand));
+	rock1->ChangeDirection(newDirr);
+	rocks->push_back(rock1);
+	//split 2
+	rand = std::rand() % 120;
+	AstroidRock* rock2 = new AstroidRock(size - 1, GetPosition());
+	newDirr = math.AngleToVector(math.DegreesToRadians(angle -rand));
+	rock2->ChangeDirection(newDirr);
+	rocks->push_back(rock2);
+
+}
+
 void AstroidRock::UpdateAstroid() 
 {
 	rigidbody->HandleVelocity();
