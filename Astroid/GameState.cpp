@@ -17,7 +17,7 @@ void GameState::Enter()
 {
 	std::cout << "Enter GameState" << std::endl;
 	player->SetPosition(Vector2(300, 300));
-
+	int randSize;
 	for (int i = 0; i < 4; i++)
 	{
 		int rand = std::rand() % 600;
@@ -26,7 +26,8 @@ void GameState::Enter()
 		int rand2 = std::rand() % 600;
 		if (rand2 > 200 && rand2 < 400)
 			rand2 += 200;
-		AstroidRock* rock = new AstroidRock(3, Vector2(rand, rand2));
+		randSize = std::rand() % 3 + 1;
+		AstroidRock* rock = new AstroidRock(randSize, Vector2(rand, rand2));
 		rocks.push_back(rock);
 	}
 	HookEvent(player);

@@ -40,9 +40,23 @@ void MenuState::Exit()
 
 void MenuState::GatherPlayerInput()
 {
-	SDL_PumpEvents();
-	const Uint8* state = SDL_GetKeyboardState(NULL);
+	SDL_Event event;
+	SDL_PollEvent(&event);
 
-	if (state[SDL_SCANCODE_SPACE])
-		head->SwitchState(1);
+	switch (event.type)
+	{
+		case SDL_KEYDOWN:
+		{
+			switch (event.key.keysym.sym)
+			{
+				case SDLK_SPACE:
+					std::cout << "Space pressed" << std::endl;
+					head->SwitchState(1);
+					break;
+				case SDLK_ESCAPE:
+					head->SetActiveGame(false);
+					break;
+			}
+		}
+	}
 }
