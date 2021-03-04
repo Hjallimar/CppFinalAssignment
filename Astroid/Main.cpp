@@ -10,9 +10,6 @@ int main(int argc, char** argv)
 	stateMachine->Initialize(600, 600);
 	stateMachine->UpdateLoop();
 	delete stateMachine;
-	//GameLoop* game = new GameLoop(600, 600);
-	//game->UpdateLoop();
-	//delete game;
 	std::cout << "Quitting Game" << std::endl;
 	return 0;
 }

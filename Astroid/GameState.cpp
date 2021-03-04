@@ -61,6 +61,8 @@ void GameState::Exit()
 {
 	UnhookEvent(player);
 	delete player;
+	rocks.clear();
+	bullets.clear();
 }
 
 void GameState::GatherPlayerInput()
@@ -78,8 +80,8 @@ void GameState::GatherPlayerInput()
 		player->Deaccelerate();
 	if (state[SDL_SCANCODE_SPACE])
 		player->Shoot();
-	//if (state[SDL_SCANCODE_ESCAPE])
-		//head->SwitchState(0);
+	if (state[SDL_SCANCODE_ESCAPE])
+		head->SwitchState(0);
 }
 
 void GameState::OnBulletFired()
@@ -108,7 +110,7 @@ void GameState::CheckCollisions()
 		if (rocks[i]->GetCollider()->Overlaping(*(player->GetCollider())))
 		{
 			//player hit astroid collider
-			//head->SwitchState(0);
+			head->SwitchState(0);
 			break;
 		}
 	}

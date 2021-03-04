@@ -38,14 +38,21 @@ void StateMachine::UpdateLoop()
 		accumulator += frametime;
 		while (accumulator >= dt)
 		{
-			//currentState->Update(dt);
+			currentState->Update(dt);
 			t += dt;
 			accumulator -= dt;
 		}
-		//currentState->Render();
+		currentState->Render();
 	}
 }
 
 void StateMachine::SwitchState(int index)
 {
+	if (index > states.size())
+		return;
+
+	currentState->Exit();
+	std::cout << "switching state to state nr: " << index << std::endl;
+	currentState = states[index];
+	currentState->Enter();
 }

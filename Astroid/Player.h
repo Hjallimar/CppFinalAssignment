@@ -47,7 +47,7 @@ private:
 	float rotation = 0;
 	float rotationSpeed = 5.0;
 	float thrustPower = 0.05;
-	float fireRate = 20;
+	float fireRate = 2;
 	float timeSinceLastBullet = 0;
 };
 
