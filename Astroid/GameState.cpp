@@ -23,7 +23,10 @@ void GameState::Enter()
 		int rand = std::rand() % 600;
 		if (rand > 200 && rand < 400)
 			rand += 200;
-		AstroidRock* rock = new AstroidRock(3, Vector2(rand, rand));
+		int rand2 = std::rand() % 600;
+		if (rand2 > 200 && rand2 < 400)
+			rand2 += 200;
+		AstroidRock* rock = new AstroidRock(3, Vector2(rand, rand2));
 		rocks.push_back(rock);
 	}
 	HookEvent(player);
