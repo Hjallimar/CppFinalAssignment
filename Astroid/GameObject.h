@@ -6,7 +6,7 @@
 class GameObject 
 {
 public:
-	GameObject(int x, int y);
+	GameObject();
 	~GameObject();
 	Vector2 GetPosition();
 	Collider* GetCollider();
@@ -14,6 +14,9 @@ public:
 	virtual void Die() = 0;
 	Vector2* windowBounderies;
 
+	virtual void SetBouneries(int x, int y) {
+		windowBounderies = new Vector2(x, y);
+	}
 protected:
 	Collider* collider;
 

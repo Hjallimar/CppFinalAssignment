@@ -1,10 +1,9 @@
 #include "GameObject.h"
 #include <iostream>
-GameObject::GameObject(int x, int y)
+GameObject::GameObject()
 {
 	position = Vector2(0.0f, 0.0f);
 	collider = new Collider(GetPosition(), 10.0f);
-	windowBounderies = new Vector2(x, y);
 }
 
 GameObject::~GameObject()
