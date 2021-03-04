@@ -12,6 +12,9 @@ private:
 	struct ValueBase
 	{
 		public:
+			ValueBase();
+			~ValueBase();
+
 			virtual void OutPut(std::ostream& osStream) = 0;
 
 			template <class T>
@@ -21,12 +24,11 @@ private:
 	template <class T>
 	struct Value : public ValueBase
 	{
-	private:
-		T* value;
-	public:
-		Value<T>(T* newValue) : value(newValue){}
+		Value();
+		Value<T>(T* newValue){ value = newValue}
 		~Value() { delete value; }
 
+		T* value;
 		virtual T* GetValue()
 		{
 			return value;
@@ -62,7 +64,7 @@ public:
 	template <class T>
 	T* GetItem(std::string path)
 	{
-		return resourcecs.at(path)->OutPut();
+		return resourcecs.at(path)->GetValue();
 	}
 };
 

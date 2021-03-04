@@ -20,9 +20,8 @@ void WhoooDoMe()
 
 int main(int argc, char** argv)
 {
-	//WhoooDoMe();
-	//return 0;
-
+	WhoooDoMe();
+	return 0;
 
 	// Create Statemachine
 	// MenuState
