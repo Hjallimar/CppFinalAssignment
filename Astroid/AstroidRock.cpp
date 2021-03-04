@@ -59,6 +59,13 @@ void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks)
 {
 	if (size <= 1)
 		return;
+
+	if (rocks->size() > rocks->max_size() - 1)
+	{
+		int cap = rocks->size();
+		rocks->resize(rocks->capacity() * 2);
+		rocks->erase(rocks->begin() + cap, rocks->end());
+	}
 	int rand = std::rand() % 120;
 	Math math;
 	//split 1
