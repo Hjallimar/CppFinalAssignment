@@ -15,7 +15,6 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
-	std::cout << "Decon" << std::endl;
 	delete rigidbody;
 	delete collider;
 }

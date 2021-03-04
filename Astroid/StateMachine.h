@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SDL.h"
-#include "GameState.h"
+#include "IState.h"
 #include <vector>
 #include <chrono>
 
@@ -10,6 +10,8 @@ class IState;
 using namespace std::chrono;
 class StateMachine
 {
+	friend class IState;
+
 public:
 	SDL_Window* window;
 	SDL_Renderer* renderer;

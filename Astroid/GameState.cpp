@@ -1,12 +1,22 @@
-#include "GameState.h"
+#include "IState.h"
+
+GameState::~GameState()
+{
+	delete player;
+}
+
+void GameState::Init(StateMachine* newHead)
+{
+	head = newHead;
+	player = new Player();
+	bullets.reserve(100);
+	rocks.reserve(50);
+}
 
 void GameState::Enter()
 {
-	player = new Player();
+	std::cout << "Enter GameState" << std::endl;
 	player->SetPosition(Vector2(300, 300));
-	head->SetActiveGame(true);
-	bullets.reserve(100);
-	rocks.reserve(50);
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -59,8 +69,8 @@ void GameState::Render()
 
 void GameState::Exit()
 {
+	std::cout << "Exit GameState" << std::endl;
 	UnhookEvent(player);
-	delete player;
 	rocks.clear();
 	bullets.clear();
 }
@@ -86,7 +96,6 @@ void GameState::GatherPlayerInput()
 
 void GameState::OnBulletFired()
 {
-	printf_s("BulletFiredEvent received.\n");
 	Bullet* bullet = new Bullet();
 	bullets.push_back(bullet);
 	bullet->SetPosition(player->GetPosition());

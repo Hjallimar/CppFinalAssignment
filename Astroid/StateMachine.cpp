@@ -1,13 +1,17 @@
 #include "StateMachine.h"
+#include "IState.h"
 
 StateMachine::StateMachine()
 {
 	states.reserve(5);
-	currentState = nullptr;
+
+	currentState = static_cast<IState*>(new GameState());
+	states.push_back(currentState);
 }
 
 StateMachine::~StateMachine()
 {
+	delete currentState;
 }
 
 void StateMachine::Initialize(int height, int width)
@@ -15,10 +19,16 @@ void StateMachine::Initialize(int height, int width)
 	window = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	activeGame = true;
+
+	MenuState* menuState = new MenuState();
 	GameState* gameState = new GameState();
-	gameState->head = this;
 	states.push_back(gameState);
-	currentState = gameState;
+	states.push_back(menuState);
+
+	menuState->Init(this);
+	gameState->Init(this);
+
+	currentState = menuState;
 	currentState->Enter();
 }
 
