@@ -74,6 +74,7 @@ void GameState::Exit()
 {
 	std::cout << "Exit GameState" << std::endl;
 	UnhookEvent(player);
+	player->GetRigidbody()->Nullify();
 	rocks.clear();
 	bullets.clear();
 }
