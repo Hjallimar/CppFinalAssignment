@@ -21,6 +21,11 @@ void GameObject::SetPosition(Vector2 newPosition)
 	collider->center = position;
 }
 
+void GameObject::SetBoundaries(Vector2 v)
+{
+	windowBounderies = v;
+}
+
 Collider* GameObject::GetCollider() 
 {
 	return collider;

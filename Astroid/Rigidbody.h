@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SDL.h"
 #include "IComponent.h"
 #include "Math.h"
 
@@ -13,15 +14,12 @@ public:
 
 	void HandleVelocity();
 	void AddForce(Vector2 force);
-	void Nullify()
-	{
-		velocity.x = 0;
-		velocity.y = 0;
-	}
-	Vector2 GetVelocity()
-	{
-		return velocity;
-	}
+	void Nullify();
+	void HandleBorderPortal();
+
+	Vector2 GetVelocity() { return velocity; }
+
 private:
 	Vector2 velocity;
+	SDL_Window* window;
 };

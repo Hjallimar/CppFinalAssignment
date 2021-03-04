@@ -15,6 +15,7 @@ void StateMachine::Initialize(int height, int width)
 {
 	window = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
 	renderer = SDL_CreateRenderer(window, -1, 0);
+	SetWindowSize(Vector2(height, width));
 	activeGame = true;
 
 	MenuState* menuState = new MenuState();

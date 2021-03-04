@@ -45,6 +45,11 @@ typedef struct Vector2
 		return Vector2(a * x, a * y);
 	}
 
+	Vector2 operator /(float a)
+	{
+		return Vector2(x / a, y / a);
+	}
+
 	Vector2 operator *=(float a)
 	{
 		x *= a;

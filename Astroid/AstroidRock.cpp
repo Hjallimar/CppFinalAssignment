@@ -12,15 +12,14 @@ AstroidRock::AstroidRock()
 	direction = math.AngleToVector(math.DegreesToRadians(angle));
 	rigidbody->AddForce(direction * speed);
 	rect = SDL_Rect();
-	rect.h = GetCollider()->radius * 2 * size;
-	rect.w = GetCollider()->radius * 2 * size;
+	rect.h = size * GetCollider()->radius;
+	rect.w = size * GetCollider()->radius;
 }
 
 AstroidRock::AstroidRock(int newSize, Vector2 startPos) 
 {
 	size = newSize;
 	speed = 2.0f;
-	int radius = 4;
 	SetPosition(startPos);
 	rigidbody = new Rigidbody();
 	rigidbody->Setup(this);
@@ -29,10 +28,8 @@ AstroidRock::AstroidRock(int newSize, Vector2 startPos)
 	direction = math.AngleToVector(math.DegreesToRadians(angle));
 	rigidbody->AddForce(direction * speed);
 	rect = SDL_Rect();
-	rect.h = radius * 2 * size;
-	rect.w = radius * 2 * size;
-	GetCollider()->radius = radius * size;
-
+	rect.h = size * GetCollider()->radius;
+	rect.w = size * GetCollider()->radius;
 }
 
 AstroidRock::~AstroidRock() 
@@ -47,12 +44,10 @@ void AstroidRock::ChangeDirection(Vector2 newDir)
 
 void AstroidRock::Render(SDL_Renderer* render) 
 {
-	Vector2 cen = GetCollider()->center;
-	rect.x = cen.x - rect.w / 2;
-	rect.y = cen.y - rect.w / 2;
+	rect.x = GetCollider()->center.x - rect.w / 2;
+	rect.y = GetCollider()->center.y - rect.w / 2;
 	SDL_SetRenderDrawColor(render, 0, 255, 0, 0);
 	SDL_RenderFillRect(render, &rect);
-	SDL_SetRenderDrawColor(render, 255, 0, 0, 0);
 }
 
 void AstroidRock::Die() 
@@ -85,27 +80,10 @@ void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks)
 	newDirr = math.AngleToVector(math.DegreesToRadians(angle -rand));
 	rock2->ChangeDirection(newDirr);
 	rocks->push_back(rock2);
-
 }
 
 void AstroidRock::UpdateAstroid() 
 {
 	rigidbody->HandleVelocity();
-	if (GetPosition().x < 0)
-	{
-		SetPosition(Vector2(GetPosition().x + 600, GetPosition().y));
-	}
-	else if (GetPosition().x > 600)
-	{
-		SetPosition(Vector2(GetPosition().x - 600, GetPosition().y));
-	}
-	if (GetPosition().y < 0)
-	{
-		SetPosition(Vector2(GetPosition().x, GetPosition().y + 600));
-	}
-	else if (GetPosition().y > 600)
-	{
-		SetPosition(Vector2(GetPosition().x, GetPosition().y - 600));
-	}
-	GetCollider()->center = GetPosition();
+	rigidbody->HandleBorderPortal();
 }

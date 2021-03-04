@@ -9,6 +9,9 @@ void GameState::Init(StateMachine* newHead)
 {
 	head = newHead;
 	player = new Player();
+
+	player->SetBoundaries(head->GetWindowSize());
+
 	bullets.reserve(100);
 	rocks.reserve(50);
 }
@@ -16,18 +19,17 @@ void GameState::Init(StateMachine* newHead)
 void GameState::Enter()
 {
 	std::cout << "Enter GameState" << std::endl;
-	player->SetPosition(Vector2(300, 300));
+	player->SetPosition(head->GetWindowSize() / 2);
 	int randSize;
 	for (int i = 0; i < 4; i++)
 	{
-		int rand = std::rand() % 600;
-		if (rand > 200 && rand < 400)
-			rand += 200;
-		int rand2 = std::rand() % 600;
-		if (rand2 > 200 && rand2 < 400)
-			rand2 += 200;
-		randSize = std::rand() % 3 + 1;
+		int x = head->GetWindowSize().x; 
+		int y = head->GetWindowSize().y;
+		int rand = std::rand() % x;
+		int rand2 = std::rand() % y;
+		randSize = std::rand() % 5 + 1;
 		AstroidRock* rock = new AstroidRock(randSize, Vector2(rand, rand2));
+		rock->SetBoundaries(head->GetWindowSize());
 		rocks.push_back(rock);
 	}
 	HookEvent(player);
@@ -104,7 +106,8 @@ void GameState::OnBulletFired()
 	Bullet* bullet = new Bullet();
 	bullets.push_back(bullet);
 	bullet->SetPosition(player->GetPosition());
-	bullet->GetRigidbody()->AddForce(player->GetDirection() * 7.5);
+	bullet->SetBoundaries(head->GetWindowSize());
+	bullet->GetRigidbody()->AddForce(player->GetDirection() * 7.5); 
 }
 
 void GameState::CheckCollisions()

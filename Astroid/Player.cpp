@@ -53,22 +53,7 @@ void Player::UpdatePlayer(double dt) {
 	}
 
 	GetRigidbody()->HandleVelocity();
-	if (GetPosition().x < 0) 
-	{
-		SetPosition(Vector2(GetPosition().x + 600, GetPosition().y));
-	}
-	else if (GetPosition().x > 600)
-	{
-		SetPosition(Vector2(GetPosition().x - 600, GetPosition().y));
-	}
-	if (GetPosition().y < 0)
-	{
-		SetPosition(Vector2(GetPosition().x, GetPosition().y + 600));
-	}
-	else if (GetPosition().y > 600)
-	{
-		SetPosition(Vector2(GetPosition().x, GetPosition().y - 600));
-	}
+	GetRigidbody()->HandleBorderPortal();
 }
 
 void Player::Die()
