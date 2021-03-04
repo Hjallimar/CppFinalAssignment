@@ -4,9 +4,6 @@
 StateMachine::StateMachine()
 {
 	states.reserve(5);
-
-	currentState = static_cast<IState*>(new GameState());
-	states.push_back(currentState);
 }
 
 StateMachine::~StateMachine()
@@ -22,8 +19,8 @@ void StateMachine::Initialize(int height, int width)
 
 	MenuState* menuState = new MenuState();
 	GameState* gameState = new GameState();
-	states.push_back(gameState);
 	states.push_back(menuState);
+	states.push_back(gameState);
 
 	menuState->Init(this);
 	gameState->Init(this);
