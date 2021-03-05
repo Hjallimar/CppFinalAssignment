@@ -135,10 +135,15 @@ void GameState::CheckCollisions()
 	if (removeIndex != -1)
 	{
 		//sum crusaded shit, look it up plz
+
+		std::cout << "rocks size before try split" << rocks.size() << std::endl;
 		rocks[removeIndex]->TrySplit(&rocks);
+		std::cout << "rocks size after try split" << rocks.size() << std::endl;
 		delete rocks[removeIndex];
 		rocks.erase(rocks.begin() + removeIndex);
 		delete bullets[bulletIndex];
 		bullets.erase(bullets.begin() + bulletIndex);
+		if(rocks.size() <= 0)
+			head->SwitchState(0);
 	}
 }

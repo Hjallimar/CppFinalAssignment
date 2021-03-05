@@ -1,70 +1,79 @@
 #pragma once
 #include <unordered_map>
 #include <SDL.h>
+#include <sstream>
 #include <iostream>
+#include <ostream>
+#include <istream>
+#include <fstream>
 
 template<class T>
 struct Value;
 
 class ResourceManager
 {
+public:
+	
 private:
 	struct ValueBase
 	{
 		public:
 			ValueBase();
 			~ValueBase();
-
-			virtual void OutPut(std::ostream& osStream) = 0;
-
-			template <class T>
-			T* GetValue() = 0;
 	};
 
 	template <class T>
 	struct Value : public ValueBase
 	{
-		Value();
-		Value<T>(T* newValue){ value = newValue}
+		Value<T>(T* newValue) { value = newValue; }
 		~Value() { delete value; }
 
 		T* value;
-		virtual T* GetValue()
+		T* GetValue()
 		{
 			return value;
 		}
-
-		void output(std::ostream& osStream, ValueBase& head)
-		{
-			head.OutPut(osStream);
-			return osStream;
-		}
 	};
 
-	std::unordered_map<std::string, ValueBase*> resourcecs;
+	std::string base;
+	std::unordered_map<std::string, std::shared_ptr<ValueBase>> resourses;
+
 public:
 	ResourceManager()
 	{
-		resourcecs = std::unordered_map<std::string, ValueBase*>();
-		resourcecs.reserve(10);
+		resourses = std::unordered_map<std::string, std::shared_ptr<ValueBase>>();
+		resourses.reserve(10);
 	}
 
 	~ResourceManager()
 	{
-		resourcecs.clear();
+		resourses.clear();
 	}
 
-	template <class T>
-	void AddItem(std::string name, T* item)
-	{
-		Value<T> val = Value<T>(item);
-		resourcecs.emplace(name, &val);
-	}
+	//void AssignBase(std::string newBase) {
+	//	base = newBase;
+	//}
 
-	template <class T>
-	T* GetItem(std::string path)
-	{
-		return resourcecs.at(path)->GetValue();
-	}
+	//
+	//void AddItemFromPath(const std::string path) 
+	//{
+	//	std::ofstream newItem = std::ofstream(base + "/" + path);
+	//	Value<std::ofstream> value = Value<std::ofstream>(&newItem);
+	//	resourses.emplace(path, value);
+	//}
+
+	//template<class T>
+	//void AddItem(const std::string path, T* newItem)
+	//{
+	//	Value<T> value = Value<T>(newItem);
+	//	resourses.emplace(path, value);
+	//}
+	//
+	//template <class T>
+	//std::shared_ptr<T> GetItem(const std::string path)
+	//{
+	//	Value<T>* value = dynamic_cast<Value<T>*>(resourses[path]);
+	//	return  std::make_shared<value->GetValue()>;
+	//}
 };
 

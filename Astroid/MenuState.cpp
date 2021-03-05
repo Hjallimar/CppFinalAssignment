@@ -13,11 +13,18 @@ void MenuState::Init(StateMachine* newHead)
 void MenuState::Enter()
 {
 	std::cout << "Enter MenuState" << std::endl;
+	idleTimer = 0.5;
 }
 
 void MenuState::Update(double dt)
 {
-	GatherPlayerInput();
+	if (idleTimer > 0) {
+		idleTimer -= dt;
+	}
+	else
+	{
+		GatherPlayerInput();
+	}
 }
 
 void MenuState::Render()
@@ -40,23 +47,11 @@ void MenuState::Exit()
 
 void MenuState::GatherPlayerInput()
 {
-	SDL_Event event;
-	SDL_PollEvent(&event);
+	SDL_PumpEvents();
+	const Uint8* state = SDL_GetKeyboardState(NULL);
 
-	switch (event.type)
-	{
-		case SDL_KEYDOWN:
-		{
-			switch (event.key.keysym.sym)
-			{
-				case SDLK_SPACE:
-					std::cout << "Space pressed" << std::endl;
-					head->SwitchState(1);
-					break;
-				case SDLK_ESCAPE:
-					head->SetActiveGame(false);
-					break;
-			}
-		}
-	}
+	if (state[SDL_SCANCODE_SPACE])
+		head->SwitchState(1);
+	if (state[SDL_SCANCODE_ESCAPE])
+		head->SetActiveGame(false);
 }

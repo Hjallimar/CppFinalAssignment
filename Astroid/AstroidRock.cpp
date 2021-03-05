@@ -59,7 +59,6 @@ void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks)
 {
 	if (size <= 1)
 		return;
-
 	if (rocks->size() > rocks->max_size() - 1)
 	{
 		int cap = rocks->size();
@@ -73,12 +72,14 @@ void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks)
 	float angle = math.VectorToAngle(direction);
 	Vector2 newDirr = math.AngleToVector(math.DegreesToRadians(angle + rand));
 	rock1->ChangeDirection(newDirr);
+	rock1->SetBoundaries(rigidbody->parent->GetBoundaries());
 	rocks->push_back(rock1);
 	//split 2
 	rand = std::rand() % 120;
 	AstroidRock* rock2 = new AstroidRock(size - 1, GetPosition());
 	newDirr = math.AngleToVector(math.DegreesToRadians(angle -rand));
 	rock2->ChangeDirection(newDirr);
+	rock2->SetBoundaries(rigidbody->parent->GetBoundaries());
 	rocks->push_back(rock2);
 }
 
