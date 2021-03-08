@@ -31,7 +31,6 @@ void MenuState::Render()
 {
 	SDL_SetRenderDrawColor(head->renderer, 0, 0, 0, 255);
 	SDL_RenderClear(head->renderer);
-
 	SDL_SetRenderDrawColor(head->renderer, 255, 255, 255, 255);
 	SDL_RenderDrawLine(head->renderer, 200, 400, 400, 300);
 	SDL_RenderDrawLine(head->renderer, 200, 200, 400, 300);

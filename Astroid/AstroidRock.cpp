@@ -1,6 +1,6 @@
 #include "AstroidRock.h"
 #include <iostream>
-AstroidRock::AstroidRock() 
+AstroidRock::AstroidRock()
 {}
 
 AstroidRock::AstroidRock(int newSize, Vector2 startPos) 
@@ -36,7 +36,6 @@ void AstroidRock::Render(SDL_Renderer* render)
 	Vector2 point = Vector2(0, r);
 	Vector2 prevPoint;
 	Math math;
-	SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
 	int corner = 8;
 	int angle = 360 / corner;
 
@@ -48,6 +47,12 @@ void AstroidRock::Render(SDL_Renderer* render)
 		point *= r;
 		if (prevPoint != Vector2(0, 0)) 
 		{
+			int rand1 = std::rand() % 255;
+			int rand2 = std::rand() % 255;
+			int rand3 = std::rand() % 255;
+			//Just for the arcade feeling
+			SDL_SetRenderDrawColor(render, rand1, rand2, rand3, 255);
+
 			//just to make it more readable
 			int x1 = GetPosition().x + prevPoint.x + 0.5;
 			int y1 = GetPosition().y + prevPoint.y + 0.5;
