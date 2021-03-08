@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClCompile Include="AstroidRock.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -161,7 +160,6 @@
   <ItemGroup>
     <ClInclude Include="AstroidRock.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="GameLoop.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="IComponent.h" />
@@ -169,7 +167,6 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="StateMachine.h" />
   </ItemGroup>

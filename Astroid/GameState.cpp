@@ -75,7 +75,6 @@ void GameState::Render()
 
 void GameState::Exit()
 {
-	std::cout << "Exit GameState" << std::endl;
 	UnhookEvent(player);
 	player->GetRigidbody()->Nullify();
 	rocks.clear();
@@ -134,11 +133,7 @@ void GameState::CheckCollisions()
 
 	if (removeIndex != -1)
 	{
-		//sum crusaded shit, look it up plz
-
-		std::cout << "rocks size before try split" << rocks.size() << std::endl;
 		rocks[removeIndex]->TrySplit(&rocks);
-		std::cout << "rocks size after try split" << rocks.size() << std::endl;
 		delete rocks[removeIndex];
 		rocks.erase(rocks.begin() + removeIndex);
 		delete bullets[bulletIndex];

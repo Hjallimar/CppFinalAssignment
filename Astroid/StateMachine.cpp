@@ -3,7 +3,7 @@
 
 StateMachine::StateMachine()
 {
-	states.reserve(5);
+	states.reserve(2);
 }
 
 StateMachine::~StateMachine()
@@ -13,7 +13,7 @@ StateMachine::~StateMachine()
 
 void StateMachine::Initialize(int height, int width)
 {
-	window = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
+	window = SDL_CreateWindow("Astroids", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, height, width, 0);
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	SetWindowSize(Vector2(height, width));
 	activeGame = true;

@@ -11,7 +11,6 @@ public:
 	Vector2 GetPosition();
 	Collider* GetCollider();
 	void SetPosition(Vector2 newPosition);
-	virtual void Die() = 0;
 
 	Vector2 GetBoundaries() { return windowBounderies; }
 	void SetBoundaries(Vector2 v);

@@ -24,7 +24,6 @@ public:
 	void Shoot();
 	void RenderPlayer(SDL_Renderer* renderer);
 	void UpdatePlayer(double dt);
-	void Die();
 	void Deaccelerate()
 	{
 		if (rigidbody->GetVelocity().Magnitude() > 0.1)

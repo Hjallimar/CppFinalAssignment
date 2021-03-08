@@ -12,7 +12,6 @@ public:
 	Rigidbody* GetRigidbody() { return rigidbody; }
 	void UpdateBullet(double dt);
 	void RenderBullet(SDL_Renderer* renderer);
-	void Die();
 	double GetLifeTime() { return lifeTime; }
 
 private:

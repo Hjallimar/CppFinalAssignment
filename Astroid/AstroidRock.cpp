@@ -1,5 +1,6 @@
 #include "AstroidRock.h"
 #include <iostream>
+
 AstroidRock::AstroidRock() 
 {
 	size = 1;
@@ -48,11 +49,6 @@ void AstroidRock::Render(SDL_Renderer* render)
 	rect.y = GetCollider()->center.y - rect.w / 2;
 	SDL_SetRenderDrawColor(render, 0, 255, 0, 0);
 	SDL_RenderFillRect(render, &rect);
-}
-
-void AstroidRock::Die() 
-{
-	//create 2 new astroids with size -1 and a new dirr
 }
 
 void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks) 

@@ -44,18 +44,14 @@ void Player::RenderPlayer(SDL_Renderer* renderer)
 	SDL_RenderDrawLine(renderer, a1, a2, b1, b2);
 	SDL_RenderDrawLine(renderer, b1, b2, c1, c2);
 	SDL_RenderDrawLine(renderer, c1, c2, a1, a2);
-	/*SDL_FillRect(renderer, SDL_Rect rectangle);*/
 }
 
-void Player::UpdatePlayer(double dt) {
+void Player::UpdatePlayer(double dt) 
+{
 	if (timeSinceLastBullet <= 1 / fireRate) {
 		timeSinceLastBullet += dt;
 	}
 
 	GetRigidbody()->HandleVelocity();
 	GetRigidbody()->HandleBorderPortal();
-}
-
-void Player::Die()
-{
 }

@@ -12,7 +12,6 @@ public:
 	Rigidbody* GetRigidBody() { return rigidbody; }
 	void ChangeDirection(Vector2 newDir);
 	void Render(SDL_Renderer* render);
-	void Die();
 	void TrySplit(std::vector<AstroidRock*>* vect);
 	void UpdateAstroid();
 private:

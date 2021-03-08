@@ -31,8 +31,3 @@ void Bullet::RenderBullet(SDL_Renderer* renderer)
 	rectangle.y = GetPosition().y;
 	SDL_RenderFillRect(renderer, &rectangle);
 }
-
-void Bullet::Die()
-{
-
-}
