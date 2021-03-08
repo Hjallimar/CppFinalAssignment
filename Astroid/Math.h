@@ -50,6 +50,13 @@ typedef struct Vector2
 		return Vector2(x / a, y / a);
 	}
 
+	bool operator !=(Vector2 newVect) 
+	{
+		if(x != newVect.x || y != newVect.y)
+			return true;
+		return false;
+	}
+
 	Vector2 operator *=(float a)
 	{
 		x *= a;

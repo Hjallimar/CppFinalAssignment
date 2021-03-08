@@ -13,6 +13,7 @@ public:
 	void ChangeDirection(Vector2 newDir);
 	void Render(SDL_Renderer* render);
 	void TrySplit(std::vector<AstroidRock*>* vect);
+	AstroidRock* HandleSplit(int size, float angle, int rand);
 	void UpdateAstroid();
 private:
 	Rigidbody* rigidbody;

@@ -39,6 +39,7 @@ public:
 		}
 	}
 	Vector2 GetDirection() { return dir; }
+	Vector2 GetDirFromAngle(int angle);
 
 private:
 	Rigidbody* rigidbody;

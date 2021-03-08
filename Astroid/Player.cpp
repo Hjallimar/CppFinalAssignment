@@ -33,17 +33,24 @@ void Player::Shoot()
 	}
 }
 
+Vector2 Player::GetDirFromAngle(int angle) 
+{
+	Vector2 temp = Vector2();
+	temp.x = GetPosition().x + (dir.x * cos(angle) - dir.y * sin(angle)) * GetCollider()->radius;
+	temp.y = GetPosition().y + (dir.x * sin(angle) + dir.y * cos(angle)) * GetCollider()->radius;
+	return temp;
+}
+
 void Player::RenderPlayer(SDL_Renderer* renderer)
 {
-	float a1 = GetPosition().x + (dir.x * cos(-60) - dir.y * sin(-60)) * GetCollider()->radius;
-	float a2 = GetPosition().y + (dir.x * sin(-60) + dir.y * cos(-60)) * GetCollider()->radius;
-	float b1 = GetPosition().x + (dir.x * cos(60) - dir.y * sin(60)) * GetCollider()->radius;
-	float b2 = GetPosition().y + (dir.x * sin(60) + dir.y * cos(60)) * GetCollider()->radius;
-	float c1 = GetPosition().x + dir.x * GetCollider()->radius;
-	float c2 = GetPosition().y + dir.y * GetCollider()->radius;
-	SDL_RenderDrawLine(renderer, a1, a2, b1, b2);
-	SDL_RenderDrawLine(renderer, b1, b2, c1, c2);
-	SDL_RenderDrawLine(renderer, c1, c2, a1, a2);
+	Vector2 nPoint = GetDirFromAngle(-60);
+	Vector2 pPoint = GetDirFromAngle(60);
+	float r = GetCollider()->radius;
+	Vector2 fPoint = Vector2(GetPosition().x + dir.x * r, GetPosition().y + dir.y * r);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_RenderDrawLine(renderer, nPoint.x, nPoint.y, pPoint.x, pPoint.y);
+	SDL_RenderDrawLine(renderer, pPoint.x, pPoint.y, fPoint.x, fPoint.y);
+	SDL_RenderDrawLine(renderer, fPoint.x, fPoint.y, nPoint.x, nPoint.y);
 }
 
 void Player::UpdatePlayer(double dt) 

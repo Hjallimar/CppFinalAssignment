@@ -1,21 +1,7 @@
 #include "AstroidRock.h"
 #include <iostream>
-
 AstroidRock::AstroidRock() 
-{
-	size = 1;
-	speed = 5.0f;
-	SetPosition(Vector2(100,100));
-	rigidbody = new Rigidbody();
-	rigidbody->Setup(this);
-	Math math;
-	int angle = std::rand() % 360;
-	direction = math.AngleToVector(math.DegreesToRadians(angle));
-	rigidbody->AddForce(direction * speed);
-	rect = SDL_Rect();
-	rect.h = size * GetCollider()->radius;
-	rect.w = size * GetCollider()->radius;
-}
+{}
 
 AstroidRock::AstroidRock(int newSize, Vector2 startPos) 
 {
@@ -31,6 +17,7 @@ AstroidRock::AstroidRock(int newSize, Vector2 startPos)
 	rect = SDL_Rect();
 	rect.h = size * GetCollider()->radius;
 	rect.w = size * GetCollider()->radius;
+	GetCollider()->radius = rect.h / 2;
 }
 
 AstroidRock::~AstroidRock() 
@@ -45,10 +32,31 @@ void AstroidRock::ChangeDirection(Vector2 newDir)
 
 void AstroidRock::Render(SDL_Renderer* render) 
 {
-	rect.x = GetCollider()->center.x - rect.w / 2;
-	rect.y = GetCollider()->center.y - rect.w / 2;
-	SDL_SetRenderDrawColor(render, 0, 255, 0, 0);
-	SDL_RenderFillRect(render, &rect);
+	float r = GetCollider()->radius;
+	Vector2 point = Vector2(0, r);
+	Vector2 prevPoint;
+	Math math;
+	SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
+	int corner = 8;
+	int angle = 360 / corner;
+
+	for (int i = 0; i < corner + 1; i++)
+	{
+		float newAngle = math.VectorToAngle(point);
+		newAngle += angle * i;
+		point = math.AngleToVector(math.DegreesToRadians(newAngle));
+		point *= r;
+		if (prevPoint != Vector2(0, 0)) 
+		{
+			//just to make it more readable
+			int x1 = GetPosition().x + prevPoint.x + 0.5;
+			int y1 = GetPosition().y + prevPoint.y + 0.5;
+			int x2 = GetPosition().x + point.x + 0.5;
+			int y2 = GetPosition().y + point.y + 0.5;
+			SDL_RenderDrawLine(render, x1, y1, x2, y2);
+		}
+		prevPoint = point;
+	}
 }
 
 void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks) 
@@ -61,22 +69,22 @@ void AstroidRock::TrySplit(std::vector<AstroidRock*>* rocks)
 		rocks->resize(rocks->max_size() * 2);
 		rocks->erase(rocks->begin() + cap, rocks->end());
 	}
-	int rand = std::rand() % 120;
 	Math math;
-	//split 1
-	AstroidRock* rock1 = new AstroidRock(size - 1, GetPosition());
 	float angle = math.VectorToAngle(direction);
-	Vector2 newDirr = math.AngleToVector(math.DegreesToRadians(angle + rand));
-	rock1->ChangeDirection(newDirr);
-	rock1->SetBoundaries(rigidbody->parent->GetBoundaries());
-	rocks->push_back(rock1);
+	//split 1
+	rocks->push_back(HandleSplit(size, angle, std::rand() % 120));
 	//split 2
-	rand = std::rand() % 120;
-	AstroidRock* rock2 = new AstroidRock(size - 1, GetPosition());
-	newDirr = math.AngleToVector(math.DegreesToRadians(angle -rand));
-	rock2->ChangeDirection(newDirr);
-	rock2->SetBoundaries(rigidbody->parent->GetBoundaries());
-	rocks->push_back(rock2);
+	rocks->push_back(HandleSplit(size, angle, -std::rand() % 120));
+}
+
+AstroidRock* AstroidRock::HandleSplit(int size, float angle, int rand)
+{
+	Math math;
+	AstroidRock* rock = new AstroidRock(size - 1, GetPosition());
+	Vector2 dir = math.AngleToVector(math.DegreesToRadians(angle + rand));
+	rock->ChangeDirection(dir);
+	rock->SetBoundaries(rigidbody->parent->GetBoundaries());
+	return rock;
 }
 
 void AstroidRock::UpdateAstroid() 
